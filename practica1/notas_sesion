@@ -1,0 +1,21 @@
+En el caso del 8 puzzle: 
+En el EightPuzzleBoard
+- Definir estado
+    Estado se define como vector de enteros
+    Cuanta más sencilla representación del estado, mejor
+
+- Definir acciones
+
+
+
+De cara a hacer el de los canívales:
+
+Una vez que se define estado, en las opciones hay manera de hacer después del board, el hashCode and equals -> donde están definidos los ficheros botón derecho del fichero que se quiere hacer -> source -> generate hashCode and equals
+
+También está la opción de hacer el toStrign para cuando hagamos el println
+
+
+Los predicados están en las transparecias, los miramos y así los implementamos.
+Si agobia el tema de mover de izquierda a derecha se pueden hacer más predicados y más operadores.
+
+
