@@ -12,6 +12,7 @@ import aima.core.environment.eightpuzzle.ManhattanHeuristicFunction;
 import aima.core.environment.eightpuzzle.MisplacedTilleHeuristicFunction;
 import aima.core.search.framework.GraphSearch;
 import aima.core.search.framework.Problem;
+import aima.core.search.framework.ResultFunction;
 import aima.core.search.framework.Search;
 import aima.core.search.framework.SearchAgent;
 import aima.core.search.informed.AStarSearch;
@@ -53,7 +54,8 @@ public class EightPuzzleDemo {
 					.getResultFunction(), new EightPuzzleGoalTest());
 			Search search = new DepthLimitedSearch(9);
 			SearchAgent agent = new SearchAgent(problem, search);
-			printActions(agent.getActions());
+			//printActions(agent.getActions());
+			executeActions(agent.getActions(), problem);
 			printInstrumentation(agent.getInstrumentation());
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -69,7 +71,8 @@ public class EightPuzzleDemo {
 					.getResultFunction(), new EightPuzzleGoalTest());
 			Search search = new IterativeDeepeningSearch();
 			SearchAgent agent = new SearchAgent(problem, search);
-			printActions(agent.getActions());
+			//printActions(agent.getActions());
+			executeActions(agent.getActions(), problem);
 			printInstrumentation(agent.getInstrumentation());
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -88,7 +91,8 @@ public class EightPuzzleDemo {
 			Search search = new GreedyBestFirstSearch(new GraphSearch(),
 					new MisplacedTilleHeuristicFunction());
 			SearchAgent agent = new SearchAgent(problem, search);
-			printActions(agent.getActions());
+			//printActions(agent.getActions());
+			executeActions(agent.getActions(), problem);
 			printInstrumentation(agent.getInstrumentation());
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -107,7 +111,8 @@ public class EightPuzzleDemo {
 			Search search = new GreedyBestFirstSearch(new GraphSearch(),
 					new ManhattanHeuristicFunction());
 			SearchAgent agent = new SearchAgent(problem, search);
-			printActions(agent.getActions());
+			//printActions(agent.getActions());
+			executeActions(agent.getActions(), problem);
 			printInstrumentation(agent.getInstrumentation());
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -125,7 +130,8 @@ public class EightPuzzleDemo {
 			Search search = new AStarSearch(new GraphSearch(),
 					new MisplacedTilleHeuristicFunction());
 			SearchAgent agent = new SearchAgent(problem, search);
-			printActions(agent.getActions());
+			//printActions(agent.getActions());
+			executeActions(agent.getActions(), problem);
 			printInstrumentation(agent.getInstrumentation());
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -142,7 +148,8 @@ public class EightPuzzleDemo {
 			SimulatedAnnealingSearch search = new SimulatedAnnealingSearch(
 					new ManhattanHeuristicFunction());
 			SearchAgent agent = new SearchAgent(problem, search);
-			printActions(agent.getActions());
+			//printActions(agent.getActions());
+			executeActions(agent.getActions(), problem);
 			System.out.println("Search Outcome=" + search.getOutcome());
 			System.out.println("Final State=\n" + search.getLastSearchState());
 			printInstrumentation(agent.getInstrumentation());
@@ -161,7 +168,8 @@ public class EightPuzzleDemo {
 			Search search = new AStarSearch(new GraphSearch(),
 					new ManhattanHeuristicFunction());
 			SearchAgent agent = new SearchAgent(problem, search);
-			printActions(agent.getActions());
+			//printActions(agent.getActions());
+			executeActions(agent.getActions(), problem);
 			printInstrumentation(agent.getInstrumentation());
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -185,5 +193,20 @@ public class EightPuzzleDemo {
 			System.out.println(action);
 		}
 	}
+	
+	public static void executeActions(List<Action> actions, Problem problem) {
+		Object initialState = problem.getInitialState();
+		ResultFunction resultFunction = problem.getResultFunction();
+		
+		Object state = initialState;
+		System.out.println("INITIAL STATE");
+		System.out.println(state);
 
+		for (Action action : actions) {
+			System.out.println(action.toString());
+			state = resultFunction.result(state, action);
+			System.out.println(state);
+			System.out.println("- - -");
+		}
+	}
 }
