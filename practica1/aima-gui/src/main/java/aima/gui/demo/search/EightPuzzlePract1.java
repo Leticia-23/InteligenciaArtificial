@@ -11,10 +11,8 @@ import aima.core.search.framework.TreeSearch;
 import aima.core.search.uninformed.*;
 
 /**
- * @author Ravi Mohan
- * 
+ * @author Leticia Sánchez (760549)
  */
-
 public class EightPuzzlePract1 {
 	static EightPuzzleBoard boardWithThreeMoveSolution = new EightPuzzleBoard(
 			new int[] { 1, 2, 5, 3, 4, 0, 6, 7, 8 });;
@@ -26,7 +24,7 @@ public class EightPuzzlePract1 {
 			6, 5, 4, 3, 2, 1 });
 
 	public static void main(String[] args) {
-		System.out.format("%8s|%11s|%11s|%11s|%11s|%17s\n", "Problema", "Profundidad", "Expand", "Q.Size", "MasQS",
+		System.out.format("%8s|%11s|%11s|%11s|%11s|%17s\n", "Problema", "Profundidad", "Expand", "Q.Size", "MaxQS",
 				"tiempo (mls)");
 		
 		//Solución a 3 pasos

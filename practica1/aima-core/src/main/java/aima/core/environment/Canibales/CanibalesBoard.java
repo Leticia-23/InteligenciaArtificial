@@ -1,7 +1,3 @@
-/**
- * @author Leticia Sánchez (760549)
- */
-
 package aima.core.environment.Canibales;
 
 import java.util.Arrays;
@@ -9,6 +5,9 @@ import java.util.Arrays;
 import aima.core.agent.Action;
 import aima.core.agent.impl.DynamicAction;
 
+/**
+ * @author Leticia Sánchez (760549)
+ */
 public class CanibalesBoard {
 	
 	public static Action MOVER1C = new DynamicAction("M1C");

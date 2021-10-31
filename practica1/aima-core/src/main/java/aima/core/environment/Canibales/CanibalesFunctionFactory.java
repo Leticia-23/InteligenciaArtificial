@@ -1,7 +1,3 @@
-/**
- * @author Leticia Sánchez (760549)
- */
-
 package aima.core.environment.Canibales;
 
 import java.util.LinkedHashSet;
@@ -11,6 +7,9 @@ import aima.core.agent.Action;
 import aima.core.search.framework.ActionsFunction;
 import aima.core.search.framework.ResultFunction;
 
+/**
+ * @author Leticia Sánchez (760549)
+ */
 public class CanibalesFunctionFactory {
 	private static ActionsFunction _actionsFunction = null;
 	private static ResultFunction _resultFunction = null;

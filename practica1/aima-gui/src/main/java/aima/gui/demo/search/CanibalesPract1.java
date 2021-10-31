@@ -14,6 +14,9 @@ import aima.core.search.framework.SearchAgent;
 import aima.core.search.framework.TreeSearch;
 import aima.core.search.uninformed.*;
 
+/**
+ * @author Leticia Sánchez (760549)
+ */
 public class CanibalesPract1 {
 	static CanibalesBoard initial = new CanibalesBoard(
 			new int[] { 3,3,0,0,0});

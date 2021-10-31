@@ -1,11 +1,10 @@
-/**
- * @author Leticia Sánchez (760549)
- */
-
 package aima.core.environment.Canibales;
 
 import aima.core.search.framework.GoalTest;
 
+/**
+ * @author Leticia Sánchez (760549)
+ */
 public class CanibalesGoalTest implements GoalTest {
 	CanibalesBoard goal = new CanibalesBoard(new int[] { 0, 0, 1, 3, 3 });
 
