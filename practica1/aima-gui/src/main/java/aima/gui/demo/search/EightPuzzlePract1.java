@@ -26,8 +26,8 @@ public class EightPuzzlePract1 {
 			6, 5, 4, 3, 2, 1 });
 
 	public static void main(String[] args) {
-		System.out.format("%8s|%11s|%11s|%11s|%11s|%11s\n", "Problema", "Profundidad", "Expand", "Q.Size", "MasQS",
-				"tiempo");
+		System.out.format("%8s|%11s|%11s|%11s|%11s|%17s\n", "Problema", "Profundidad", "Expand", "Q.Size", "MasQS",
+				"tiempo (mls)");
 		
 		//Solución a 3 pasos
 		//Búsqueda en anchura (BFS)

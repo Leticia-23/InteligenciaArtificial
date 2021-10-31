@@ -11,15 +11,15 @@ import aima.core.agent.impl.DynamicAction;
 
 public class CanibalesBoard {
 	
-	public static Action MOVER1C = new DynamicAction("Mover1C");
+	public static Action MOVER1C = new DynamicAction("M1C");
 	
-	public static Action MOVER2C = new DynamicAction("Mover2C");
+	public static Action MOVER2C = new DynamicAction("M2C");
 	
-	public static Action MOVER1M = new DynamicAction("Mover1M");
+	public static Action MOVER1M = new DynamicAction("M1M");
 	
-	public static Action MOVER2M = new DynamicAction("Mover2M");
+	public static Action MOVER2M = new DynamicAction("M2M");
 	
-	public static Action MOVER1M1C = new DynamicAction("Mover1M1C");
+	public static Action MOVER1M1C = new DynamicAction("M1M1C");
 	
 	private int[] state;
 	
@@ -191,46 +191,49 @@ public class CanibalesBoard {
 
 	@Override
 	public String toString() {
-		String retVal = "RIBERA-IZQ ";
+		String ribIzq = "   RIBERA-IZQ ";
+		String ribDch = " RIBERA-DCH";
+		String Mi = "", Ci = "", B = "", Md = "", Cd = "";
+		
 		// Misioneros izquierda
 		if (state[0] == 3) {
-			retVal += "M M M ";
+			Mi = "M M M ";
 		} else if (state[0] == 2) {
-			retVal += "M M ";
+			Mi = "M M   ";
 		} else if (state[0] == 1) {
-			retVal += "M ";
+			Mi = "M     ";
 		}
 		// Caníbales izquierda
 		if (state[1] == 3) {
-			retVal += "C C C ";
+			Ci = "C C C ";
 		} else if (state[1] == 2) {
-			retVal += "C C ";
+			Ci = "C C   ";
 		} else if (state[1] == 1) {
-			retVal += "C ";
+			Ci = "C     ";
 		}
 		// Posición del bote
 		if (state[2] == 0) {
-			retVal += "BOTE --RIO-- ";
+			B = "BOTE --RIO--      ";
 		} else if (state[2] == 1) {
-			retVal += "--RIO-- BOTE ";
+			B = "--RIO-- BOTE ";
 		}
 		// Misioneros derecha
 		if (state[3] == 3) {
-			retVal += "M M M ";
+			Md = "M M M ";
 		} else if (state[3] == 2) {
-			retVal += "M M ";
+			Md = "  M M ";
 		} else if (state[3] == 1) {
-			retVal += "M ";
+			Md = "    M ";
 		}
 		// Caníbales derecha
 		if (state[4] == 3) {
-			retVal += "C C C ";
+			Cd = "C C C ";
 		} else if (state[4] == 2) {
-			retVal += "C C ";
+			Cd = "  C C ";
 		} else if (state[4] == 1) {
-			retVal += "C ";
+			Cd = "    C ";
 		}
-		return retVal += "RIBERA-DCH";
+		return String.format("%s%6s%6s%18s%6s%6s%s", ribIzq, Mi, Ci, B, Md, Cd, ribDch);
 	}
 	
 	
