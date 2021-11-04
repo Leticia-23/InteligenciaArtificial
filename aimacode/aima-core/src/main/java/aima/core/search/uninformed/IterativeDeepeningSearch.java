@@ -41,6 +41,7 @@ public class IterativeDeepeningSearch extends NodeExpander implements Search {
 		iterationMetrics = new Metrics();
 		iterationMetrics.set(METRIC_NODES_EXPANDED, 0);
 		iterationMetrics.set(PATH_COST, 0);
+		iterationMetrics.set(METRIC_NODES_GENERATED, 0);
 	}
 
 	// function ITERATIVE-DEEPENING-SEARCH(problem) returns a solution, or
@@ -48,6 +49,7 @@ public class IterativeDeepeningSearch extends NodeExpander implements Search {
 	public List<Action> search(Problem p) throws Exception {
 		iterationMetrics.set(METRIC_NODES_EXPANDED, 0);
 		iterationMetrics.set(PATH_COST, 0);
+		iterationMetrics.set(METRIC_NODES_GENERATED, 0);
 		// for depth = 0 to infinity do
 		for (int i = 0; i <= infinity; i++) {
 			// result <- DEPTH-LIMITED-SEARCH(problem, depth)
@@ -56,6 +58,9 @@ public class IterativeDeepeningSearch extends NodeExpander implements Search {
 			iterationMetrics.set(METRIC_NODES_EXPANDED,
 					iterationMetrics.getInt(METRIC_NODES_EXPANDED)
 							+ dls.getMetrics().getInt(METRIC_NODES_EXPANDED));
+			iterationMetrics.set(METRIC_NODES_GENERATED,
+					iterationMetrics.getInt(METRIC_NODES_GENERATED)
+							+ dls.getMetrics().getInt(METRIC_NODES_GENERATED));
 			// if result != cutoff then return result
 			if (!dls.isCutOff(result)) {
 				iterationMetrics.set(PATH_COST, dls.getPathCost());
