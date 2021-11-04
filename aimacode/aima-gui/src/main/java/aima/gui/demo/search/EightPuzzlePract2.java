@@ -25,43 +25,52 @@ public class EightPuzzlePract2 {
 		System.out.println("------------------------------------------------------------------------------------------");
 		System.out.println("------------------------------------------------------------------------------------------");
 		
-		experiments();
-	
-	}
-	
-	public static void experiments() {
+		//Experimentos para profundidad en el intervalo [2-24]
 		for (int d = 2; d <= 24; d++) {
-			int ng_BFS = 0, ng_IDS = 0, ng_Misplaced = 0, ng_Manhattan = 0;
+			int nG, ng_BFS = 0, ng_IDS = 0, ng_Misplaced = 0, ng_Manhattan = 0;
 			double b_BFS = 0.0, b_IDS = 0.0, b_Misplaced = 0.0, b_Manhattan = 0.0;
 			EightPuzzleBoard init = null, goal = null;
 			
+			//100 experimentos para profundidad = d
 			for (int i = 0; i < 100; i++) {
-				//Generar estado inicial y final
-				init = new EightPuzzleBoard(GenerateInitialEightPuzzleBoard.randomIni());
-				goal = new EightPuzzleBoard(GenerateInitialEightPuzzleBoard.random(d, init));
-				////Comprobar que la solución es óptima (d=pathCost)
-				//Se comprueba para una búsqueda A* (tiene que serlo para esa, para poder comparar el resto)
-				check_depth(d, init, goal);	
+				int depth = 0;
+				
+				do {
+					//Generar estado inicial y final
+					init = new EightPuzzleBoard(GenerateInitialEightPuzzleBoard.randomIni());
+					goal = new EightPuzzleBoard(GenerateInitialEightPuzzleBoard.random(d, init));
+					//Comprobar que la solución es óptima (d=pathCost)
+					//Se comprueba para una búsqueda A* (tiene que serlo para esa,
+					//de esta forma todas las búsquedas se hacen con los mismos estados
+					//para poder realizar las comparaciones correctamente)
+					depth = check_depth(d, init, goal, depth);	
+					
+				}while(d!=depth);
+				
 				
 				//BFS
-				ng_BFS += expNodes(init, goal, new BreadthFirstSearch(new GraphSearch()), d);
-				//b_BFS += expBiseccion(d,ng_BFS);
-				/*
+				nG = expNodes(init, goal, new BreadthFirstSearch(new GraphSearch()), d);
+				ng_BFS += nG;
+				b_BFS += expBiseccion(d,nG);
+				
 				//IDS
 				if (d <=10 ) {
-					ng_IDS += expNodes(init, goal, new IterativeDeepeningSearch(), d);
-					b_IDS += expBiseccion(d,ng_IDS);
+					nG = expNodes(init, goal, new IterativeDeepeningSearch(), d);
+					ng_IDS += nG;
+					b_IDS += expBiseccion(d,nG);
 				}
 				//A*h(1) -> MisplacedTilleHeuristicFunction
-				ng_Misplaced += expNodes(init, goal,  new AStarSearch(new GraphSearch(),
+				nG = expNodes(init, goal,  new AStarSearch(new GraphSearch(),
 						new MisplacedTilleHeuristicFunction2()), d);
-				b_Misplaced += expBiseccion(d,ng_Misplaced);
+				ng_Misplaced += nG;
+				b_Misplaced += expBiseccion(d,nG);
 				
 				//A*h(2) -> ManhattanHeuristicFunction
-				ng_Manhattan += expNodes(init, goal,  new AStarSearch(new GraphSearch(),
+				nG = expNodes(init, goal,  new AStarSearch(new GraphSearch(),
 						new ManhattanHeuristicFunction2()), d);
-				b_Manhattan += expBiseccion(d,ng_Manhattan);
-				*/
+				ng_Manhattan += nG;
+				b_Manhattan += expBiseccion(d,nG);
+				
 			}
 			ng_BFS /= 100;
 			ng_Misplaced /= 100;
@@ -80,31 +89,28 @@ public class EightPuzzlePract2 {
 						d, ng_BFS, "---", ng_Misplaced, ng_Manhattan, b_BFS, "---", b_Misplaced, b_Manhattan);
 			}
 		}
+	
 	}
 	
-	public static void check_depth(int d, EightPuzzleBoard init, EightPuzzleBoard goal)  {
-		int depth = 0;
-		do {
+	public static int check_depth(int d, EightPuzzleBoard init, EightPuzzleBoard goal, int depth)  {
 		//Comprobar que la solución es óptima (d=pathCost)
 		//Se comprueba para una búsqueda A* (tiene que serlo para esa, para poder comparar el resto)
-			try {
-				Problem problem = new Problem(init, EightPuzzleFunctionFactory
-						.getActionsFunction(),EightPuzzleFunctionFactory
-						.getResultFunction(), new EightPuzzleGoalTest2(goal));
-				
-				Search search = new AStarSearch(new GraphSearch(),
-						new ManhattanHeuristicFunction2());
-				SearchAgent agent = new SearchAgent(problem, search);
-				//Obter el coste del camino
-				String pathcostM = agent.getInstrumentation().getProperty("pathCost");
-				if (pathcostM!=null) depth = (int)Float.parseFloat(pathcostM);
-				else depth = 0;
-			} catch (Exception e) {
-				e.printStackTrace();
-			}	
-		}while(d!=depth);
-				
-				
+		try {
+			Problem problem = new Problem(init, EightPuzzleFunctionFactory
+					.getActionsFunction(),EightPuzzleFunctionFactory
+					.getResultFunction(), new EightPuzzleGoalTest2(goal));
+			
+			Search search = new AStarSearch(new GraphSearch(),
+					new ManhattanHeuristicFunction2());
+			SearchAgent agent = new SearchAgent(problem, search);
+			//Obter el coste del camino
+			String pathcostM = agent.getInstrumentation().getProperty("pathCost");
+			if (pathcostM!=null) depth = (int)Float.parseFloat(pathcostM);
+			else depth = 0;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}	
+		return depth;			
 	}
 	
 		
@@ -133,7 +139,8 @@ public class EightPuzzlePract2 {
 		Biseccion bis = new Biseccion();
 		bis.setDepth(depth);
 		bis.setGeneratedNodes(nodesGenerated);
-		return bis.metodoDeBiseccion(1.000000000001, 4.0, 1E-12);
+		double b = bis.metodoDeBiseccion(1.000000000001, 4.0, 1E-12);
+		return b;
 	}
 
 }

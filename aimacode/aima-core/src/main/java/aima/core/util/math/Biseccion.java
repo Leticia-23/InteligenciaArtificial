@@ -31,7 +31,7 @@ public class Biseccion {
         double m = 0.0;
   
         if((funcion(a) * funcion(b)) > 0){
-            //System.out.println("Error en el intervalo, en ese intervalo no existen raices");
+            System.out.println("Error en el intervalo, en ese intervalo no existen raices");
         }else{
 
              m = (a + b) /(double) 2;
