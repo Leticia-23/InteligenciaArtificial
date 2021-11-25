@@ -22,21 +22,21 @@ import aima.core.search.local.Individual;
 import aima.core.search.local.SimulatedAnnealingSearch;
 import aima.core.util.datastructure.XYLocation;
 
+import java.text.DecimalFormat;
+
 public class NQueensDemoPract3 {
 private static final int _boardSize = 8;
+
+private static final DecimalFormat df = new DecimalFormat("0.00");
 	
 	public static void main(String[] args) {
 
-		newNQueensDemo();
+		nQueensHillClimbingSearch_Statistics(10000);
+		System.out.println("\n\n");
+		nQueensRandomRestartHillClimbing();
+		//nQueensSimulatedAnnealingSearch();
+		//nQueensGeneticAlgorithmSearch();
 	}
-
-	private static void newNQueensDemo() {
-
-		nQueensSimulatedAnnealingSearch();
-		nQueensHillClimbingSearch();
-		nQueensGeneticAlgorithmSearch();
-	}
-
 	
 
 	private static void nQueensSimulatedAnnealingSearch() {
@@ -59,40 +59,97 @@ private static final int _boardSize = 8;
 			e.printStackTrace();
 		}
 	}
-
-	private static void nQueensHillClimbingSearch() {
-		System.out.println("\nNQueensDemo HillClimbing  -->");
-		try {
-			Problem problem = new Problem(new NQueensBoard(_boardSize),
-					NQueensFunctionFactory.getCActionsFunction(),
-					NQueensFunctionFactory.getResultFunction(),
-					new NQueensGoalTest());
-			HillClimbingSearch search = new HillClimbingSearch(
-					new AttackingPairsHeuristic());
-			SearchAgent agent = new SearchAgent(problem, search);
-
-			System.out.println();
-			printActions(agent.getActions());
-			System.out.println("Search Outcome=" + search.getOutcome());
-			System.out.println("Final State=\n" + search.getLastSearchState());
-			printInstrumentation(agent.getInstrumentation());
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
 	
 	//Método para generar numExperimentos veces la búsqueda Hill Climbing 
 	public static void nQueensHillClimbingSearch_Statistics(int numExperiments) {
-		System.out.println("NQueens HillClimbing con 10000 estados iniciales diferentes -->");
+		System.out.format("\nNQueensDemo HillClimbing con %s estados iniciales diferentes --> \n", numExperiments);
 		
-		double fallos, exitos, coste_fallos, coste_exitos = 0.0;
+		double fallos = 0.0, exitos = 0.0, coste_fallos = 0.0, coste_exitos = 0.0;
 		
 		Set <NQueensBoard> set = generateSetNQueensBoard(8, numExperiments);
+		NQueensBoard [] array = set.toArray(new NQueensBoard[set.size()]);
 		
 		for (int i = 0; i < numExperiments; i++) {
-			
+			try {
+				Problem problem = new Problem(array[i],
+						NQueensFunctionFactory.getCActionsFunction(),
+						NQueensFunctionFactory.getResultFunction(),
+						new NQueensGoalTest());
+				HillClimbingSearch search = new HillClimbingSearch(
+						new AttackingPairsHeuristic());
+				SearchAgent agent = new SearchAgent(problem, search);
+				
+				if (search.getOutcome().toString().equals("SOLUTION_FOUND")) {
+					exitos ++;
+					coste_exitos += agent.getActions().size();
+				}
+				else {
+					fallos ++;
+					coste_fallos += agent.getActions().size();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 		
+		double coste_medio_fallos = 0.0, coste_medio_exitos = 0.0;
+		
+		if (fallos > 0 ) {
+			coste_medio_fallos = coste_fallos / numExperiments;
+		} 
+		if (exitos > 0 ) {
+			coste_medio_exitos = coste_exitos / numExperiments;
+		} 
+				
+		System.out.println("Fallos: " +  df.format(fallos));
+		System.out.println("Coste medio fallos:" + df.format(coste_medio_fallos));
+		System.out.println("Exitos: " + df.format(exitos));
+		System.out.println("Coste medio exitos: " + df.format(coste_medio_exitos));
+		
+	}
+	
+	public static void nQueensRandomRestartHillClimbing() {
+		int fallos = 0;
+		double coste_fallos = 0.0, coste_exito = 0.0;
+		boolean done = false;
+		HillClimbingSearch search = null;
+		SearchAgent agent = null;
+
+		while (!done) {
+			try {
+				Problem problem = new Problem(generateRamdomNQueensBoard(8),
+						NQueensFunctionFactory.getCActionsFunction(),
+						NQueensFunctionFactory.getResultFunction(),
+						new NQueensGoalTest());
+				search = new HillClimbingSearch(
+						new AttackingPairsHeuristic());
+				agent = new SearchAgent(problem, search);
+				
+				if (search.getOutcome().toString().equals("SOLUTION_FOUND")) {
+					done = true;
+					coste_exito = agent.getActions().size();
+				} else {
+					fallos ++;
+					coste_fallos += agent.getActions().size();
+				}				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		double coste_medio_fallos = 0.0;
+		
+		if (fallos > 0) {
+			coste_medio_fallos = (coste_fallos / (double)(fallos));
+		}
+		
+		System.out.println("Search Outcome = " + search.getOutcome().toString());
+		System.out.println("Final State =\n" + search.getLastSearchState());
+		System.out.println("Número de intentos: " + (fallos + 1));
+		System.out.println("Fallos: " + fallos);
+		System.out.println("Coste medio fallos: " + df.format(coste_medio_fallos));
+		System.out.println("Coste éxito: " + df.format(coste_exito));
+		System.out.println("Coste medio exitos: " + df.format(coste_exito/1));		
 	}
 	
 	//Método para generar aleatoriamente un tablero inicial con numReinas reinas
