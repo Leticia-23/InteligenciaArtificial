@@ -1,0 +1,32 @@
+para saber los pasos, no hay pathcost pero se puede obtener así -> agent.getActions().size()
+
+FAILURE SOLUTION_FOUND
+    search.getOutCome().toString().equals("solution_found")
+    
+search.getCostSearchState()
+
+
+
+simulate ... y algoritmos geneticos
+jugar con parametros del scheduler
+
+
+Hill-Climbing es lo mejor para hacer lo utlimo
+
+
+Para la primera tarea:
+
+
+public static NQueensBoard generateRamdomNQueensBoard (int numReinas)
+
+
+public static Set<NQueensBoard> generateSetNQueensBoard(int numReinas, int numElementos) {
+	    Set <NQueensBoard> set = new HashSet <NQueensBoard>();
+	    while (set.size() < numElementos) {
+	        set.add(generateRamdomNQueensBoard(numReinas));
+	    }
+}
+
+
+IMPORTANTE
+En el código se interpreta en las matrices[i][j], la i=columna y j=fila. (Al revés de como se hace de normal)
