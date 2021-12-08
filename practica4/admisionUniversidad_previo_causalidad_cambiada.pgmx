@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ProbModelXML formatVersion="0.2.0">
+  <ProbNet type="BayesianNetwork">
+    <Comment showWhenOpeningNetwork="false"><![CDATA[<html>
+  <head>
+    
+  </head>
+  <body>
+    Red universidad estudio previo
+  </body>
+</html>]]></Comment>
+    <DecisionCriteria>
+      <Criterion name="---" unit="---" />
+    </DecisionCriteria>
+    <Properties />
+    <Variables>
+      <Variable name="Carrera" type="finiteStates" role="chance">
+        <Coordinates x="358" y="138" />
+        <States>
+          <State name="D" />
+          <State name="C" />
+          <State name="B" />
+          <State name="A" />
+        </States>
+      </Variable>
+      <Variable name="Género" type="finiteStates" role="chance">
+        <Coordinates x="671" y="133" />
+        <States>
+          <State name="Masculino" />
+          <State name="Femenino" />
+        </States>
+      </Variable>
+      <Variable name="Admitidos" type="finiteStates" role="chance">
+        <Coordinates x="510" y="278" />
+        <States>
+          <State name="no" />
+          <State name="sí" />
+        </States>
+      </Variable>
+    </Variables>
+    <Links>
+      <Link directed="true">
+        <Variable name="Carrera" />
+        <Variable name="Admitidos" />
+      </Link>
+      <Link directed="true">
+        <Variable name="Género" />
+        <Variable name="Admitidos" />
+      </Link>
+      <Link directed="true">
+        <Variable name="Género" />
+        <Variable name="Carrera" />
+      </Link>
+    </Links>
+    <Potentials>
+      <Potential type="Table" role="conditionalProbability">
+        <Variables>
+          <Variable name="Carrera" />
+          <Variable name="Género" />
+        </Variables>
+        <Values>0.527 0.0 0.4303 0.0427 0.473 0.3683 0.0427 0.116</Values>
+      </Potential>
+      <Potential type="Table" role="conditionalProbability">
+        <Variables>
+          <Variable name="Género" />
+        </Variables>
+        <Values>0.659 0.341</Values>
+      </Potential>
+      <Potential type="Table" role="conditionalProbability">
+        <Variables>
+          <Variable name="Admitidos" />
+          <Variable name="Carrera" />
+          <Variable name="Género" />
+        </Variables>
+        <Values>0.67 0.33 0.631 0.369 0.37 0.63 0.38 0.62 0.651 0.349 0.66 0.34 0.32 0.68 0.176 0.824</Values>
+      </Potential>
+    </Potentials>
+  </ProbNet>
+  <InferenceOptions>
+    <MulticriteriaOptions>
+      <SelectedAnalysisType>UNICRITERION</SelectedAnalysisType>
+      <Unicriterion>
+        <Scales>
+          <Scale Criterion="---" Value="1.0" />
+        </Scales>
+      </Unicriterion>
+      <CostEffectiveness>
+        <Scales>
+          <Scale Criterion="---" Value="1.0" />
+        </Scales>
+        <CE_Criteria>
+          <CE_Criterion Criterion="---" Value="Cost" />
+        </CE_Criteria>
+      </CostEffectiveness>
+    </MulticriteriaOptions>
+  </InferenceOptions>
+  <Evidence>
+    <EvidenceCase />
+    <EvidenceCase>
+      <Finding variable="Género" state="Femenino" />
+    </EvidenceCase>
+  </Evidence>
+</ProbModelXML>

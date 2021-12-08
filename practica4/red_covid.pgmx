@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ProbModelXML formatVersion="0.2.0">
+  <ProbNet type="BayesianNetwork">
+    <Comment showWhenOpeningNetwork="false"><![CDATA[<html>
+  <head>
+    
+  </head>
+  <body>
+    Red Bayesiana para el Covid
+  </body>
+</html>]]></Comment>
+    <AdditionalProperties />
+    <Variables>
+      <Variable name="Inmunizado (I)" type="finiteStates" role="chance">
+        <Coordinates x="262" y="124" />
+        <AdditionalProperties>
+          <Property name="Relevance" value="0.1" />
+        </AdditionalProperties>
+        <States>
+          <State name="no" />
+          <State name="sí" />
+        </States>
+      </Variable>
+      <Variable name="Contacto Estrecho (E)" type="finiteStates" role="chance">
+        <Coordinates x="553" y="122" />
+        <States>
+          <State name="no" />
+          <State name="sí" />
+        </States>
+      </Variable>
+      <Variable name="Covid (C)" type="finiteStates" role="chance">
+        <Coordinates x="408" y="212" />
+        <States>
+          <State name="no" />
+          <State name="sí" />
+        </States>
+      </Variable>
+      <Variable name="Test PCR (P)" type="finiteStates" role="chance">
+        <Coordinates x="226" y="290" />
+        <States>
+          <State name="negativo" />
+          <State name="positivo" />
+        </States>
+      </Variable>
+      <Variable name="Síntomas (S)" type="finiteStates" role="chance">
+        <Coordinates x="584" y="294" />
+        <States>
+          <State name="no" />
+          <State name="sí" />
+        </States>
+      </Variable>
+      <Variable name="Hospitalización (H)" type="finiteStates" role="chance">
+        <Coordinates x="410" y="394" />
+        <States>
+          <State name="no" />
+          <State name="sí" />
+        </States>
+      </Variable>
+      <Variable name="Gripe (G)" type="finiteStates" role="chance">
+        <Coordinates x="723" y="219" />
+        <States>
+          <State name="no" />
+          <State name="sí" />
+        </States>
+      </Variable>
+      <Variable name="Vacunado Gripe (V)" type="finiteStates" role="chance">
+        <Coordinates x="896" y="114" />
+        <States>
+          <State name="no" />
+          <State name="sí" />
+        </States>
+      </Variable>
+    </Variables>
+    <Links>
+      <Link directed="true">
+        <Variable name="Inmunizado (I)" />
+        <Variable name="Covid (C)" />
+      </Link>
+      <Link directed="true">
+        <Variable name="Contacto Estrecho (E)" />
+        <Variable name="Covid (C)" />
+      </Link>
+      <Link directed="true">
+        <Variable name="Covid (C)" />
+        <Variable name="Test PCR (P)" />
+      </Link>
+      <Link directed="true">
+        <Variable name="Test PCR (P)" />
+        <Variable name="Hospitalización (H)" />
+      </Link>
+      <Link directed="true">
+        <Variable name="Síntomas (S)" />
+        <Variable name="Hospitalización (H)" />
+      </Link>
+      <Link directed="true">
+        <Variable name="Gripe (G)" />
+        <Variable name="Síntomas (S)" />
+      </Link>
+      <Link directed="true">
+        <Variable name="Vacunado Gripe (V)" />
+        <Variable name="Gripe (G)" />
+      </Link>
+    </Links>
+    <Potentials>
+      <Potential type="Uniform" role="conditionalProbability">
+        <Variables>
+          <Variable name="Inmunizado (I)" />
+        </Variables>
+      </Potential>
+      <Potential type="Uniform" role="conditionalProbability">
+        <Variables>
+          <Variable name="Contacto Estrecho (E)" />
+        </Variables>
+      </Potential>
+      <Potential type="Uniform" role="conditionalProbability">
+        <Variables>
+          <Variable name="Covid (C)" />
+          <Variable name="Inmunizado (I)" />
+          <Variable name="Contacto Estrecho (E)" />
+        </Variables>
+      </Potential>
+      <Potential type="Uniform" role="conditionalProbability">
+        <Variables>
+          <Variable name="Test PCR (P)" />
+          <Variable name="Covid (C)" />
+        </Variables>
+      </Potential>
+      <Potential type="Uniform" role="conditionalProbability">
+        <Variables>
+          <Variable name="Síntomas (S)" />
+          <Variable name="Gripe (G)" />
+        </Variables>
+      </Potential>
+      <Potential type="Uniform" role="conditionalProbability">
+        <Variables>
+          <Variable name="Hospitalización (H)" />
+          <Variable name="Test PCR (P)" />
+          <Variable name="Síntomas (S)" />
+        </Variables>
+      </Potential>
+      <Potential type="Uniform" role="conditionalProbability">
+        <Variables>
+          <Variable name="Hospitalización (H)" />
+          <Variable name="Test PCR (P)" />
+          <Variable name="Síntomas (S)" />
+        </Variables>
+      </Potential>
+      <Potential type="Uniform" role="conditionalProbability">
+        <Variables>
+          <Variable name="Hospitalización (H)" />
+          <Variable name="Test PCR (P)" />
+          <Variable name="Síntomas (S)" />
+        </Variables>
+      </Potential>
+      <Potential type="Uniform" role="conditionalProbability">
+        <Variables>
+          <Variable name="Gripe (G)" />
+          <Variable name="Vacunado Gripe (V)" />
+        </Variables>
+      </Potential>
+      <Potential type="Uniform" role="conditionalProbability">
+        <Variables>
+          <Variable name="Vacunado Gripe (V)" />
+        </Variables>
+      </Potential>
+    </Potentials>
+  </ProbNet>
+  <InferenceOptions>
+    <MulticriteriaOptions>
+      <SelectedAnalysisType>UNICRITERION</SelectedAnalysisType>
+    </MulticriteriaOptions>
+  </InferenceOptions>
+</ProbModelXML>
