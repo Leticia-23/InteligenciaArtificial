@@ -5,8 +5,6 @@ import java.util.List;
 import aima.core.search.csp.CSP;
 import aima.core.search.csp.Domain;
 import aima.core.search.csp.Variable;  
-import aima.gui.sudoku.csp.SudokuVariable;
-
 public class SudokuProblem extends CSP {
      private static final int cells = 81;
      private static List<Variable> variables = null;
@@ -111,4 +109,3 @@ public class SudokuProblem extends CSP {
                }
      }
 }
-

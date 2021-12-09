@@ -12,9 +12,9 @@ public class SudokuConstraint implements Constraint{
 	private Variable var2;
 	private List<Variable> scope;
 	
-	public SudokuConstraint(Variable _var1, Variable _var2) {
-		this.var1=_var1;
-		this.var2=_var2;
+	public SudokuConstraint(Variable var1, Variable var2) {
+		this.var1 = var1;
+		this.var2 = var2;
 		scope = new ArrayList<Variable>(2);
 		scope.add(var1);
 		scope.add(var2);
