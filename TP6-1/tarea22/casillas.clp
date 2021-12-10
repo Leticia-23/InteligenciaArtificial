@@ -7,6 +7,8 @@
 (deftemplate MAIN::nodo
     ;;; Definición del estado.
     (slot casilla)
+    (slot N_andar)
+    (slot N_saltar)
     (multislot camino)
     (slot coste (default 0))
     (slot clase (default abierto))
@@ -17,7 +19,9 @@
 (deffacts MAIN::estado-inicial
     ;;; DEFINE Nodo inicial
     (nodo
-        (casilla 0)
+        (casilla 1)
+        (N_andar 0)
+        (N_saltar 0)
         (camino (implode$ (create$ 1)))
         ;(coste 0)
         ;(clase abierto)
@@ -26,8 +30,11 @@
 
 (defrule MAIN::pasa-el-mejor-a-cerrado-CU
     ;;; IMPLEMENTA CU
-    ?nodo <- (nodo (clase abierto) (coste ?c1))
-    
+    ?nodo <- (nodo (coste ?c1) (clase abierto))
+	(not (nodo (clase abierto) (coste ?c2&:(< ?c2 ?c1))))
+	=>
+	(modify ?nodo (clase cerrado))
+	(focus OPERADORES)  
 )
 
 
@@ -42,10 +49,46 @@
 
 (defrule OPERADORES::Andar
     ;;; IMPLEMENTA
+    (nodo (casilla ?s)
+            (N_andar ?andadas)
+            (N_saltar ?saltos)
+            (camino $?movs)
+            (coste ?cost)
+            (clase cerrado)
+    )
+    (test (< ?s 8))
+    =>
+    (assert(nodo
+            (casilla (+ ?s 1))
+            (N_andar (+ ?andadas 1))
+            (N_saltar ?saltos)
+            (camino $?movs (+ ?s 1))
+            (coste (+ ?cost 1))
+            )
+    )
+
 )
 
 (defrule OPERADORES::Saltar
     ;;; IMPLEMENTA
+    (nodo (casilla ?s)
+            (N_andar ?andadas)
+            (N_saltar ?saltos)
+            (camino $?movs)
+            (coste ?cost)
+            (clase cerrado)
+    )
+    (test (< ?s 4))
+    (test (< ?saltos ?andadas))
+    =>
+    (assert(nodo
+            (casilla (* ?s 2))
+            (N_andar ?andadas)
+            (N_saltar (+ ?saltos 1))
+            (camino $?movs  (* ?s 2))
+            (coste (+ ?cost 2))
+            )
+    )
 )
 
 ;-------------------------------------------------------------
@@ -60,6 +103,12 @@
 ; eliminamos nodos repetidos
 (defrule RESTRICCIONES::repeticiones-de-nodo
     ;;; IMPLEMENTA
+    (declare (auto-focus TRUE))
+      ?nodo1 <- (nodo (casilla ?casilla) (camino $?camino1))
+      (nodo (casilla ?casilla) 
+        (camino $?camino2&:(> (length$ ?camino1) (length$ ?camino2))))
+    =>
+    (retract ?nodo1))
 )
 
 ;-------------------------------------------------------------
