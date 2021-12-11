@@ -23,13 +23,10 @@
         (N_andar 0)
         (N_saltar 0)
         (camino (implode$ (create$ 1)))
-        ;(coste 0)
-        ;(clase abierto)
     )
 )
 
 (defrule MAIN::pasa-el-mejor-a-cerrado-CU
-    ;;; IMPLEMENTA CU
     ?nodo <- (nodo (coste ?c1) (clase abierto))
 	(not (nodo (clase abierto) (coste ?c2&:(< ?c2 ?c1))))
 	=>
@@ -48,21 +45,20 @@
 
 
 (defrule OPERADORES::Andar
-    ;;; IMPLEMENTA
-    (nodo (casilla ?s)
+    (nodo (casilla ?num)
             (N_andar ?andadas)
             (N_saltar ?saltos)
             (camino $?movs)
             (coste ?cost)
             (clase cerrado)
     )
-    (test (< ?s 8))
+    (test (< ?num 8))
     =>
     (assert(nodo
-            (casilla (+ ?s 1))
+            (casilla (+ ?num 1))
             (N_andar (+ ?andadas 1))
             (N_saltar ?saltos)
-            (camino $?movs (+ ?s 1))
+            (camino $?movs (+ ?num 1))
             (coste (+ ?cost 1))
             )
     )
@@ -70,22 +66,21 @@
 )
 
 (defrule OPERADORES::Saltar
-    ;;; IMPLEMENTA
-    (nodo (casilla ?s)
+    (nodo (casilla ?num)
             (N_andar ?andadas)
             (N_saltar ?saltos)
             (camino $?movs)
             (coste ?cost)
             (clase cerrado)
     )
-    (test (< ?s 4))
+    (test (< ?num 5))
     (test (< ?saltos ?andadas))
     =>
     (assert(nodo
-            (casilla (* ?s 2))
+            (casilla (* ?num 2))
             (N_andar ?andadas)
             (N_saltar (+ ?saltos 1))
-            (camino $?movs  (* ?s 2))
+            (camino $?movs  (* ?num 2))
             (coste (+ ?cost 2))
             )
     )
@@ -102,11 +97,10 @@
 
 ; eliminamos nodos repetidos
 (defrule RESTRICCIONES::repeticiones-de-nodo
-    ;;; IMPLEMENTA
     (declare (auto-focus TRUE))
-      ?nodo1 <- (nodo (casilla ?casilla) (camino $?camino1))
+      ?nodo1 <- (nodo (casilla ?casilla) (coste ?cost1))
       (nodo (casilla ?casilla) 
-        (camino $?camino2&:(> (length$ ?camino1) (length$ ?camino2))))
+        (coste ?cost2&:(> ?cost1 ?cost2)))
     =>
     (retract ?nodo1))
 )
