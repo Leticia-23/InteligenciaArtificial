@@ -6,7 +6,6 @@ import java.util.Scanner;
 
 import aima.core.search.csp.Assignment;
 import aima.core.search.csp.Variable;
-import aima.gui.sudoku.csp.SudokuVariable;
 
 public class Sudoku {
 	final static int FILAS=9;

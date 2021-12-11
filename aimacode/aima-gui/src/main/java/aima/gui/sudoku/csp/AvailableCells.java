@@ -6,8 +6,6 @@ package aima.gui.sudoku.csp;
 import java.util.ArrayList;
 import java.util.List;
 import aima.core.search.csp.Variable;
-import aima.gui.sudoku.csp.SudokuVariable;
-
 public class AvailableCells {
      private int numOfAvailable;
      private List<Variable> list;

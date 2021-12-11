@@ -18,23 +18,22 @@ public class SudokuApp {
 		for (Sudoku s : lista) {
 			System.out.println("---------");
 			s.imprimeSudoku();			
-			if (!s.completo()) {
-				CSP csp = new SudokuProblem(s.pack_celdasAsignadas());
-				SolutionStrategy strategy = new ImprovedBacktrackingStrategy(true, true, true, true);
-				
-				System.out.println("SUDOKU INCOMPLETO - RESOLVIENDO");
-				
-				double start = System.currentTimeMillis();
-				Assignment sol = strategy.solve(csp);
-				double end = System.currentTimeMillis();
-				System.out.println(sol);
-				System.out.println("Time to solve = " + ((end - start) / 1000) + " segundos");
-				System.out.println("SOLUCIÓN:");
-				Sudoku solved = new Sudoku(sol);
-				solved.imprimeSudoku();
-				System.out.println("Sudoku solucionado correctamente");
-				resueltos++;	
-			}
+//			if (!s.completo()) {
+//				SolutionStrategy strategy = new ImprovedBacktrackingStrategy(true, true, true, true);		
+//				System.out.println("SUDOKU INCOMPLETO - RESOLVIENDO");
+//				double start = System.currentTimeMillis();
+//				Assignment sol = strategy.solve(new SudokuProblem(s.pack_celdasAsignadas()));
+//				double end = System.currentTimeMillis();
+//				System.out.println("Time to solve = " + ((end - start) / 1000) + " segundos");
+//				System.out.println("SOLUCIÓN:");
+//				Sudoku solved = new Sudoku(sol);
+//				if (solved.correcto() ) {
+//					solved.imprimeSudoku();
+//					System.out.println("Sudoku solucionado correctamente");
+//					resueltos++;
+//				}
+//					
+//			}
 		}
 		System.out.println("+++++++++");
 		System.out.printf("Se han resuelto %s sudokus", resueltos);
