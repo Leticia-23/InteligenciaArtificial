@@ -13,15 +13,17 @@
 (deftemplate MAIN::nodo
 	(multislot estado)
 	(multislot camino)
+    (slot coste (default 0))
 	(slot heuristica)
     (slot clase (default abierto)))
 
 (defglobal MAIN
-   ?*estado-inicial* = (create$ B B B H V V V))
+   ?*estado-inicial* = (create$ B B B H V V V)
+   ?*estado-final* = (create$  V V V H B B B))
 
 (deffunction MAIN::heuristica ($?estado)
    (bind ?res 0)
-   (loop-for-count (?i 1 9)
+   (loop-for-count (?i 1 7)
     (if (neq (nth$ ?i $?estado)
              (nth$ ?i ?*estado-final*))
          then (bind ?res (+ ?res 1))
@@ -69,61 +71,32 @@
  (defmodule OPERADORES
    (import MAIN deftemplate nodo)
    (import MAIN deffunction heuristica))
-
-(defrule OPERADORES::arriba
-   (nodo (estado $?a ?b ?c ?d H $?e)
-          (camino $?movimientos)
-          (clase cerrado)
-          (coste ?coste))
-=>
-   (bind $?nuevo-estado (create$  $?a H ?c ?d ?b $?e))
-   (assert (nodo 
-		      (estado $?nuevo-estado)
-              (camino $?movimientos ^)
-              (coste (+ ?coste 1))
-              (heuristica (heuristica $?nuevo-estado)))))
-
-(defrule OPERADORES::abajo
-   (nodo (estado $?a H ?b ?c ?d  $?e)
-          (camino $?movimientos)
-          (clase cerrado)
-          (coste ?coste))
-
-=>
-   (bind $?nuevo-estado (create$ $?a ?d ?b ?c H $?e))
-   (assert (nodo 
-              (estado $?nuevo-estado)
-              (camino $?movimientos v)
-              (coste (+ ?coste 1))
-              (heuristica (heuristica $?nuevo-estado)))))
               
 (defrule OPERADORES::izquierda
-   (nodo (estado $?a&:(neq (mod (length$ $?a) 3) 2)
-                   ?b H $?c)
+   (nodo (estado $?a ?b $?c&:(< (length$ ?c) 3) H $?d)
           (camino $?movimientos)
           (clase cerrado)
           (coste ?coste))
 
 =>
-   (bind $?nuevo-estado (create$ $?a H ?b $?c))
+   (bind $?nuevo-estado  (create$ $?a H $?c ?b  $?d))
    (assert (nodo 
 		      (estado $?nuevo-estado)
-              (camino $?movimientos <)
+              (camino $?movimientos (implode$ ?nuevo-estado))
               (coste (+ ?coste 1))
               (heuristica (heuristica $?nuevo-estado)))))
 
 (defrule OPERADORES::derecha
-   (nodo (estado $?a H ?b
-                 $?c&:(neq (mod (length$ $?c) 3) 2))
+   (nodo (estado $?a H $?b&:(< (length$ ?b) 3) ?c $?d)
           (camino $?movimientos)
           (clase cerrado)
           (coste ?coste))
 
  =>
-   (bind $?nuevo-estado (create$ $?a ?b H $?c))
+   (bind $?nuevo-estado (create$ $?a ?c $?b H  $?d))
    (assert (nodo 
 		      (estado $?nuevo-estado)
-              (camino $?movimientos >)
+              (camino $?movimientos (implode$ ?nuevo-estado))
               (coste (+ ?coste 1))
               (heuristica (heuristica $?nuevo-estado)))))
 				  
@@ -131,12 +104,10 @@
 ; MODULO RESTRICCIONES
 ;-------------------------------------------------------------
 ; Nos quedamos con el nodo de menor coste
-; Soluci�n v�lida si el coste de cada operador es 1.
 
 (defmodule RESTRICCIONES
    (import MAIN deftemplate nodo))
  
-; eliminamos nodos repetidos (Falta eliminar los de igual coste -INTENTALO)
 (defrule RESTRICCIONES::repeticiones-de-nodo
 	(declare (auto-focus TRUE))
       ?nodo1 <- (nodo (estado $?estado) (camino $?camino1))
@@ -144,6 +115,7 @@
         (camino $?camino2&:(> (length$ ?camino1) (length$ ?camino2))))
  =>
    (retract ?nodo1))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;    MODULO MAIN::SOLUCION        ;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -153,7 +125,7 @@
 
 (defrule SOLUCION::reconoce-solucion
    (declare (auto-focus TRUE))
-   ?nodo <- (nodo (estado 1 2 3 8 H 4 7 6 5)
+   ?nodo <- (nodo (estado V V V H B B B)
                (camino $?movimientos))
  => 
    (retract ?nodo)
@@ -162,5 +134,7 @@
 (defrule SOLUCION::escribe-solucion
    (solucion $?movimientos)
   =>
-   (printout t "Solucion:" $?movimientos crlf)
+   (printout t "La solucion tiene:" (length$ ?movimientos) " pasos" crlf)
+   (loop-for-count (?i 1 (length$ ?movimientos))
+   (printout t (nth ?i $?movimientos) crlf))
    (halt))
