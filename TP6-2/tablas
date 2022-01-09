@@ -1,0 +1,59 @@
+ Dataset MNIST
+ 
+ 
+UNA CAPA CON 10 NEURONAS
+
+Tipo de red     Algoritmo    Función salida    Accuracy train     Accuracy test
+--------------------------------------------------------------------------------------------------
+ 
+Perceptrón     Adam            sigmoidal            93.21           92.74
+
+Perceptrón     Adam            softmax              93.20           92.75
+
+Perceptrón     Adam             lineal              25.29           25.47
+
+Perceptrón     SGD              sigmoidal           90.14           90.59
+
+Perceptrón     SGD             softmax              90.16           90.77
+    
+Perceptrón     RMSprop         sigmoidal            93.23           92.84
+
+Perceptrón     RMSprop         softmax              93.24           92.67
+
+-> El mejor entrenamiento es RMSprop + softmax
+-> El MEJOR en datos de TEST es Adam + softmax
+
+
+
+
+2 CAPAS (1 CAPA OCULTA) - CAPA SALIDA 10 NEURONAS - FUNCIÓN SALIDA SOFTMAX - ALGORITMO ADAM - FUNCIÓN CAPA OCULTA RELU
+
+Tipo de red            Nº neuronas capa oculta         Accuracy train      Accuracy test
+------------------------------------------------------------------------------------------
+Perceptrón 2 capa                10                     94.59                   93.71
+                             20                         97.01                   95.80
+                            40                          98.74                   97.14
+                            50                          99.08                   97.36
+                            100                         99.65                   97.67
+ 
+ 
+ 
+ 
+-> El mejor entrenamiento es RMSprop + softmax
+-> El MEJOR en datos de TEST es Adam + softmax
+ 
+ 
+3 CAPAS (2 CAPA OCULTA) - CAPA SALIDA 10 NEURONAS - FUNCIÓN SALIDA SOFTMAX - ALGORITMO ADAM - FUNCIÓN CAPA OCULTA RELU
+ 
+Tipo de red            Nº neuronas capa oculta 1        Nº neuronas capa oculta 2        Accuracy train      Accuracy test
+---------------------------------------------------------------------------------------------------------------------------------------------------
+Perceptrón 3 capas  
+
+
+
+
+
+
+
+-> El mejor entrenamiento es RMSprop + softmax
+-> El MEJOR en datos de TEST es Adam + softmax

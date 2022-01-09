@@ -1,0 +1,9 @@
+- Parámetros batch_size y epochs
+
+- Explicación de las gráficas, qué es epochs, qué es loss (acurracy = aciertos totales)
+
+- En ejemplo Dense parámetro output_dim = nº redes = 10
+¿qué valores poner las capas ocultas?
+
+- ¿Cómo saber si hay sobre ajuste? 
+Para solucionarlo utilizar dropout, pero ¿cómo?
