@@ -6,54 +6,85 @@ UNA CAPA CON 10 NEURONAS
 Tipo de red     Algoritmo    Función salida    Accuracy train     Accuracy test
 --------------------------------------------------------------------------------------------------
  
-Perceptrón     Adam            sigmoidal            93.21           92.74
+Perceptrón     Adam            sigmoidal            93.34           92.68
 
-Perceptrón     Adam            softmax              93.20           92.75
+Perceptrón     Adam            softmax              93.26           92.74
 
-Perceptrón     Adam             lineal              25.29           25.47
+Perceptrón     Adam             lineal              10.92           11.04
 
-Perceptrón     SGD              sigmoidal           90.14           90.59
+Perceptrón     SGD              sigmoidal           90.14           90.53
 
-Perceptrón     SGD             softmax              90.16           90.77
+Perceptrón     SGD             softmax              90.17           90.78
     
-Perceptrón     RMSprop         sigmoidal            93.23           92.84
+Perceptrón     RMSprop         sigmoidal            93.22           92.85
 
-Perceptrón     RMSprop         softmax              93.24           92.67
+Perceptrón     RMSprop         softmax              93.23           92.79
 
 -> El mejor entrenamiento es RMSprop + softmax
--> El MEJOR en datos de TEST es Adam + softmax
+-> El MEJOR en datos de TEST es RMSprop  + sigmoidal
 
 
 
+-> Las pruebo con sigmoidal proque es la que ha salido mejor para una capa, y lo he vuelto a probar con dos capas y efectivamente siempre sale un poco mejor con sigmoidal
+2 CAPAS (1 CAPA OCULTA) - CAPA SALIDA 10 NEURONAS - FUNCIÓN SALIDA sigmoidal - ALGORITMO ADAM - FUNCIÓN CAPA OCULTA RELU
 
-2 CAPAS (1 CAPA OCULTA) - CAPA SALIDA 10 NEURONAS - FUNCIÓN SALIDA SOFTMAX - ALGORITMO ADAM - FUNCIÓN CAPA OCULTA RELU
-
-Tipo de red            Nº neuronas capa oculta         Accuracy train      Accuracy test
+sobreajuste          algoritmo      Nº neuronas capa oculta         Accuracy train      Accuracy test
 ------------------------------------------------------------------------------------------
-Perceptrón 2 capa                10                     94.59                   93.71
-                             20                         97.01                   95.80
-                            40                          98.74                   97.14
-                            50                          99.08                   97.36
-                            100                         99.65                   97.67
+                        Adam                 10                     94.40                   93.82
+                           RMSprop            10                    93.71                       92.96
+                           
+                          Adam                20                         96.95                   95.82
+                          
+                          Adam                  40                          98.90                  97.03
+                          
+                         Adam                 50                          99.12                   97.34
+    con dropout=0.1         Adam                   50                   98.89                       97.53
+    con dropout=0.2         Adam                   50                   98.62                       97.22
+    con dropout=0.3         Adam                   50                   
+    
+                            Adam             100                         99.67                   97.76
+    con dropout=0.1         Adam             100                        99.60                   97.86
+    con dropout=0.3         Adam             100                        99.26                   97.77
+    con dropout=0.5         Adam             100                        98.61                  97.47  
+    
+                            Adam             300                        99.76                   98.08
+         0.2               Adam             300                         99.67                   98.21
+        0.5                 Adam             300                        99.48                   98.10
+         0.8                 Adam             300                       98.28                   97.45                    
+        
+                            Adam              500                       99.57                   97.84
+           0.3                                                          99.65                   98.03
+           0.5                                                          99.70                   98.28
+           0.8                                                          98.82                   97.90
  
  
+-> El mejor entrenamiento es 
+-> El MEJOR en datos de TEST es 
  
  
--> El mejor entrenamiento es RMSprop + softmax
--> El MEJOR en datos de TEST es Adam + softmax
+3 CAPAS (2 CAPA OCULTA) - CAPA SALIDA 10 NEURONAS - FUNCIÓN SALIDA SIGMOIDAL - ALGORITMO ADAM - FUNCIÓN CAPA OCULTA RELU
  
- 
-3 CAPAS (2 CAPA OCULTA) - CAPA SALIDA 10 NEURONAS - FUNCIÓN SALIDA SOFTMAX - ALGORITMO ADAM - FUNCIÓN CAPA OCULTA RELU
- 
-Tipo de red            Nº neuronas capa oculta 1        Nº neuronas capa oculta 2        Accuracy train      Accuracy test
----------------------------------------------------------------------------------------------------------------------------------------------------
-Perceptrón 3 capas  
+Tipo de red    Nº capa oculta 1        Nº capa oculta 2        Accuracy train      Accuracy test
+-----------------------------------------------------------------------------------------------------------
+                    10                      10                      94.51               93.96
+                    
+                    50                      10                      99.12               97.02
+                    
+                    10                      50                      96.17               94.87
+                    
+                    50                      50                      99.14               97.35
+                    
+                    50                      100                     98.91               96.80
+
+                    100                     100                     99.25               97.76
+    0,2 en ambas   100                     100                      99.23               97.88
+                    
+                    100                     50                      99.55               97.59
 
 
 
 
 
 
-
--> El mejor entrenamiento es RMSprop + softmax
--> El MEJOR en datos de TEST es Adam + softmax
+-> El mejor entrenamiento es 
+-> El MEJOR en datos de TEST es 

@@ -1,0 +1,33 @@
+Sobreajuste
+
+    ejemplo de Overfitting que se puede detectar rápidamente viendo las gráficas : cuando las dos líneas que representan los datos de entrenamiento y validación divergen consistentemente.
+
+    
+    
+    Se dice que un modelo estadístico está sobreajustado cuando lo entrenamos con muchos datos. Cuando un modelo se entrena con tantos datos, comienza a aprender del ruido y las entradas de datos inexactas en nuestro conjunto de datos. Entonces, el modelo no categoriza los datos correctamente, debido a demasiados detalles y ruido.
+    
+    Las causas del sobreajuste son los métodos no paramétricos y no lineales porque estos tipos de algoritmos de aprendizaje automático tienen más libertad para construir el modelo basado en el conjunto de datos y, por lo tanto, realmente pueden construir modelos poco realistas. Una solución para evitar el overfitting es usar un algoritmo lineal si tenemos datos lineales o usar parámetros como la profundidad máxima si estamos usando árboles de decisión.
+    
+    
+    
+    
+    Para un modelo que está sobreajustado, tenemos un puntaje de conjunto de entrenamiento perfecto/casi perfecto, mientras que un puntaje de prueba/validación deficiente.
+    
+    
+
+    
+    
+In Keras, the dropout rate argument is (1-p). For intermediate layers, choosing (1-p) = 0.5 for large networks is ideal. For the input layer, (1-p) should be kept about 0.2 or lower. This is because dropping the input data can adversely affect the training.
+En Keras, el argumento de la tasa de abandono es (1-p). Para capas intermedias, lo ideal es elegir (1-p) = 0,5 para redes grandes. Para la capa de entrada, (1-p) debe mantenerse alrededor de 0,2 o menos. Esto se debe a que dejar caer los datos de entrada puede afectar negativamente al entrenamiento.
+
+
+
+Si bien es mejor determinar el valor del parámetro p con un conjunto de validación, está perfectamente bien establecerlo en p≈0.5. Este valor ha mostrado los mejores resultados empíricos cuando se probó con el conjunto de datos MNIST.
+Para evitar agujeros en sus datos de entrada, los autores argumentaron que es mejor establecer p para la capa de entrada en 1.0, efectivamente lo mismo que no aplicar Dropout allí.
+La deserción parece funcionar mejor cuando se usa una combinación de regularización de norma máxima (en Keras, con la restricción MaxNorm), altas tasas de aprendizaje que decaen a valores más pequeños y un alto impulso.
+
+
+
+Por lo general, utilice un valor de abandono pequeño del 20 % al 50 % de las neuronas, y el 20 % proporciona un buen punto de partida. Una probabilidad demasiado baja tiene un efecto mínimo y un valor demasiado alto da como resultado un subaprendizaje de la red.
+Utilice una red más grande. Es probable que obtenga un mejor rendimiento cuando se utiliza el abandono en una red más grande, lo que le brinda al modelo más oportunidades de aprender representaciones independientes.
+Use el abandono en las unidades entrantes (visibles) y ocultas. La aplicación de dropout en cada capa de la red ha mostrado buenos resultados.

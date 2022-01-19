@@ -7,3 +7,43 @@
 
 - ¿Cómo saber si hay sobre ajuste? 
 Para solucionarlo utilizar dropout, pero ¿cómo?
+
+
+
+
+
+
+TUTORÍA
+
+- dropout pequeño ya que lo que hace es apagar ese porcentaje de neuronas aleatoriamente
+
+- para forzar sobreajuste poner mayor numéro de neuronas y/o entrenamiento largo (+ epochs)
+
+- Hacer pruebas con valores y poner la mejor de entre esa, tampoco hace falta probar un montón
+
+- Para ver si hay sobreajuste mirar que en la gráfica en el test no se estanque, es decir no puede ser que en entrenamiento siga subiendo mucho pero para los datos de validación tenga los valores practicamente iguales en la epoch 10 que en la 20.
+
+
+
+
+
+
+
+
+
+
+--------------------------------------------------
+
+Por esta razón considero que hay sobreajuste cuando la diferencia entre train y test es de más de 1% (ya que para el caso de una capa aproximadamente esta es la diferencia que sale, al igual que en el ejemplo que se proporcionaba)
+
+
+
+
+
+
+
+Al entrenar redes de dos capas han comenzado a salir algunas con sobreajuste y se ha solucionado con dropout. De entre las que no necesitaban dropout y las que sí, se ha seleccionado la que mejor accuracy en test ha dado como resultado.
+
+Cabe destacar que tras buscar información se ha encontrado que se recomeinda: para capas intermedias, elegir dropout = 0,5 para redes grandes (este valor ha mostrado los mejores resultados cuando se ha probado con el conjunto de datos MNIST). Para la capa de entrada, dropout debe mantenerse alrededor de 0,2 o menos. Esto se debe a que dejar caer los datos de entrada puede afectar negativamente al entrenamiento.
+
+Se han realizado distintas pruebas con distintos valores para el número de neuronas en la capa oculta (entre 10 y 500). Tras las pruebas realizadas se observa que la accuracy mejora conforme se aumenta el número de neuronas en la capa oculta. Es por esto que se considera que la mejor es la de 500 en capa oculta, pero controlando el sobreajuste con dropout)
